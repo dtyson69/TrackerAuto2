@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, Button } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import axios from 'axios';
-import { useNavigation } from '@react-navigation/native';
 
 const DeliveryScreen = ({ route }) => {
   const { loadId } = route.params;
   const [deliveryDetails, setDeliveryDetails] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchDeliveryDetails = async () => {
       console.log('Load ID:', loadId);
       try {
         const response = await axios.get(`http://50.6.170.96:8088/delivery`, {
+          
           params: { loadid: loadId },
         });
         setDeliveryDetails(response.data);
@@ -44,10 +43,6 @@ const DeliveryScreen = ({ route }) => {
           <Text style={styles.detailText}>Load Description: {detail.drvPhone}</Text>
         </View>
       ))}
-      <Button
-        title="Start Pickup"
-        onPress={() => navigation.navigate('PhotoScreen', { loadId })}
-      />
     </View>
   );
 };
